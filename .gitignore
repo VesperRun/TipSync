@@ -1,3 +1,10 @@
 # Local-only build / session workflow (not product git)
 WORKFLOW*.md
 WORKSTACK*.md
+
+# Next.js app
+app/node_modules/
+app/.next/
+app/out/
+app/.env*
+app/next-env.d.ts
