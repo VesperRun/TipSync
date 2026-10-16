@@ -1,0 +1,28 @@
+# TipSync on Render — Web Service only (no Postgres).
+# Dashboard: New → Blueprint → connect github.com/VesperRun/TipSync
+# Or create one Python Web Service manually (see docs/RENDER.md).
+
+services:
+  - type: web
+    name: tipsync-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: APK_DOWNLOAD_URL
+        sync: false
+      - key: APK_VERSION_CODE
+        value: "1"
+      - key: APK_VERSION_NAME
+        value: "0.1.0"

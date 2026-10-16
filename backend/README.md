@@ -21,4 +21,4 @@ uvicorn main:app --reload --port 8000
 | GET | `/entitlement?email=` | Stripe subscription check |
 | GET | `/releases/latest?email=` | Gated APK metadata + URL |
 
-See [../docs/RENDER.md](../docs/RENDER.md).
+Production: [../docs/RENDER.md](../docs/RENDER.md) (Blueprint [../render.yaml](../render.yaml) or manual Web Service, `rootDir: backend`).

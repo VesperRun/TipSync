@@ -41,7 +41,9 @@ cd android
 
 Install `app/build/outputs/apk/debug/app-debug.apk` on a device. All gig data stays in **Room** on the phone.
 
-## Backend (Phase 3 — stateless)
+## Backend + Render (stateless)
+
+Local:
 
 ```powershell
 cd backend
@@ -51,7 +53,7 @@ pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 
-No `DATABASE_URL`. See [backend/README.md](./backend/README.md).
+**Production:** one Render Web Service — [docs/RENDER.md](./docs/RENDER.md) + [render.yaml](./render.yaml). No `DATABASE_URL`.
 
 ## Optional UI mock (`app/`)
 
