@@ -46,6 +46,16 @@ def _entitlement_for_email(email: str) -> tuple[bool, bool]:
     return active, founding
 
 
+@app.get("/")
+def root() -> dict[str, str]:
+    return {
+        "service": "TipSync API",
+        "status": "ok",
+        "health": "/health",
+        "docs": "/docs",
+    }
+
+
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
