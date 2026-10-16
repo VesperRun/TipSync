@@ -1,0 +1,3 @@
+# Local-only build / session workflow (not product git)
+WORKFLOW*.md
+WORKSTACK*.md
