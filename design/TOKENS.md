@@ -1,6 +1,6 @@
-# TipSync design tokens (draft)
+# TipSync design tokens (Phase 0)
 
-Pull final accent from approved icon when available.
+Accent matches [icon.svg](./icon.svg). Replace when final brand PNG lands in `design/`.
 
 | Token | Value |
 |-------|--------|
@@ -13,4 +13,4 @@ Pull final accent from approved icon when available.
 | `--font-ui` | system-ui, Inter, sans-serif |
 | `--font-display` | Georgia, "Playfair Display", serif |
 
-Usage: defined in `app/src/app/globals.css` as CSS variables.
+Usage: `app/src/app/globals.css` (web mock); `android/.../ui/theme/Theme.kt` (ship target).

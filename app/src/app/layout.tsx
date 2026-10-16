@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     "Gig and cast ledger for Texas drag hosts. Tracks the show; you move the money.",
   applicationName: "TipSync",
   manifest: "/manifest.webmanifest",
+  icons: [{ url: "/icon.svg", type: "image/svg+xml" }],
 };
 
 export const viewport: Viewport = {

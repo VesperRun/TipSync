@@ -15,6 +15,10 @@ object SeedGigs {
                 guaranteeReceived = true,
                 tips = 620,
                 tipMethods = "cash,Venmo",
+                otherIncome = 0,
+                booker = "Eagle events",
+                source = "IG DM",
+                notes = "Cast call 8pm door",
             ),
             GigEntity(
                 id = "fri-dallas",

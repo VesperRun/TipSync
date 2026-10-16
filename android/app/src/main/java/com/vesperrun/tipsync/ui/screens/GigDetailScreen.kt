@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +26,10 @@ import androidx.compose.ui.unit.dp
 import com.vesperrun.tipsync.data.CastLineEntity
 import com.vesperrun.tipsync.data.GigEntity
 import com.vesperrun.tipsync.data.GigRepository
+import com.vesperrun.tipsync.data.GigStatus
+import com.vesperrun.tipsync.ui.components.CityTag
+import com.vesperrun.tipsync.ui.components.SectionCard
+import com.vesperrun.tipsync.ui.components.StatusChip
 import com.vesperrun.tipsync.ui.formatCallTime
 import kotlinx.coroutines.launch
 
@@ -46,6 +52,12 @@ fun GigDetailScreen(
         return
     }
 
+    val showIncome = current.guarantee + current.tips + current.otherIncome
+    val castOwed = cast.filter { !it.paid }.sumOf { it.amount }
+    val postShow =
+        current.status == GigStatus.Completed.label ||
+            current.status == GigStatus.Paid.label
+
     Column(
         modifier =
             Modifier
@@ -54,17 +66,33 @@ fun GigDetailScreen(
                 .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            CityTag(current.city)
+            StatusChip(current.status)
+        }
         Text(current.venue, style = MaterialTheme.typography.headlineMedium)
-        Text(
-            "${current.city} · ${current.status}",
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Text(formatCallTime(current.callTimeIso))
-        Text("Role: ${current.role}")
+        Text(formatCallTime(current.callTimeIso), color = MaterialTheme.colorScheme.onSurfaceVariant)
 
-        Text("Income", style = MaterialTheme.typography.titleMedium)
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("Guarantee $${current.guarantee}")
+        if (postShow) {
+            Text(
+                "Post-show — log income and mark cast paid",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+            )
+        }
+
+        SectionCard(title = "Booking") {
+            DetailRow("Role", current.role)
+            DetailRow("Booker", current.booker.ifBlank { "—" })
+            DetailRow("Source", current.source.ifBlank { "—" })
+            DetailRow("Notes", current.notes.ifBlank { "—" })
+        }
+
+        SectionCard(title = "Show income") {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Guarantee")
+                Text("$${current.guarantee}")
+            }
             FilterChip(
                 selected = current.guaranteeReceived,
                 onClick = {
@@ -74,22 +102,59 @@ fun GigDetailScreen(
                     }
                 },
                 label = { Text(if (current.guaranteeReceived) "Received" else "Not received") },
+                modifier = Modifier.defaultMinSize(minHeight = 48.dp),
             )
-        }
-        Text("Tips $${current.tips}")
-        if (current.tipMethods.isNotBlank()) {
-            Text("Methods: ${current.tipMethods.replace(",", ", ")}")
-        }
-
-        Text("Cast ledger", style = MaterialTheme.typography.titleMedium)
-        cast.forEach { line ->
-            CastRow(line) {
-                scope.launch { repository.toggleCastPaid(line) }
+            DetailRow(
+                "Tips",
+                "$${current.tips}" +
+                    if (current.tipMethods.isNotBlank()) {
+                        " · ${current.tipMethods.replace(",", ", ")}"
+                    } else {
+                        ""
+                    },
+            )
+            DetailRow("Other", "$${current.otherIncome}")
+            HorizontalDivider(Modifier.padding(vertical = 8.dp))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Total", style = MaterialTheme.typography.titleMedium)
+                Text("$showIncome", style = MaterialTheme.typography.titleMedium)
             }
         }
-        if (cast.isEmpty()) {
-            Text("No cast lines yet.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+
+        SectionCard(title = "Cast ledger") {
+            if (castOwed > 0) {
+                Text(
+                    "$$castOwed still owed this show",
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            } else if (cast.isNotEmpty()) {
+                Text("Cast paid for this show", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            cast.forEach { line ->
+                CastRow(line) {
+                    scope.launch { repository.toggleCastPaid(line) }
+                }
+            }
+            if (cast.isEmpty()) {
+                Text("No cast lines yet.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
         }
+    }
+}
+
+@Composable
+private fun DetailRow(
+    label: String,
+    value: String,
+) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Text(label, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(value)
     }
 }
 
@@ -98,7 +163,12 @@ private fun CastRow(
     line: CastLineEntity,
     onTogglePaid: () -> Unit,
 ) {
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
         Column {
             Text(line.name, style = MaterialTheme.typography.bodyLarge)
             Text(
@@ -110,6 +180,7 @@ private fun CastRow(
             selected = line.paid,
             onClick = onTogglePaid,
             label = { Text(if (line.paid) "Paid" else "Owed") },
+            modifier = Modifier.defaultMinSize(minHeight = 48.dp),
         )
     }
 }

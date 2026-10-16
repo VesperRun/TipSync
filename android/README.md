@@ -8,4 +8,6 @@ Open this folder in Android Studio, or:
 .\gradlew.bat assembleDebug
 ```
 
-Screens follow [../SCREENS.md](../SCREENS.md). Seed data matches the optional [../app/](../app/) mock for parity.
+Screens follow [../SCREENS.md](../SCREENS.md) and [../design/screens/WIREFRAMES.md](../design/screens/WIREFRAMES.md). Seed data matches the optional [../app/](../app/) mock for parity.
+
+**Phase 0 complete:** nav shell, post-show gig detail sections (Booking · Show income · Cast ledger), Unpaid route, locked product decisions in [../PRODUCT.md](../PRODUCT.md).

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { GigCard } from "@/components/GigCard";
 import { castOwedAll, mockGigs } from "@/lib/mock-gigs";
 
@@ -10,9 +11,9 @@ export default function HomePage() {
   return (
     <main className="page">
       {owed > 0 ? (
-        <div className="banner-unpaid" role="status">
+        <Link href="/unpaid" className="banner-unpaid" role="status">
           <strong>${owed}</strong> cast still owed across shows
-        </div>
+        </Link>
       ) : null}
 
       <h2 className="section-title">This week</h2>

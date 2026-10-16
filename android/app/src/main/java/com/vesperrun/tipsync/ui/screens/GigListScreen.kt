@@ -21,6 +21,7 @@ fun GigListScreen(
     title: String,
     gigsFlow: () -> kotlinx.coroutines.flow.Flow<List<com.vesperrun.tipsync.data.GigEntity>>,
     onGigClick: (String) -> Unit,
+    footerHint: String? = null,
 ) {
     val gigs by gigsFlow().collectAsState(initial = emptyList())
 
@@ -37,6 +38,15 @@ fun GigListScreen(
         if (gigs.isEmpty()) {
             item {
                 Text("Nothing here yet.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        if (footerHint != null) {
+            item {
+                Text(
+                    footerHint,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 16.dp),
+                )
             }
         }
     }

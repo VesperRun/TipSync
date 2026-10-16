@@ -2,6 +2,8 @@
 
 **Android (Compose)** — ship target. Bottom nav on all main screens. (`app/` = optional static mock only.)
 
+**Phase 0:** Layout matches [design/screens/WIREFRAMES.md](./design/screens/WIREFRAMES.md). PNG mocks optional; tokens in [design/TOKENS.md](./design/TOKENS.md).
+
 ## Nav
 
 | Tab | Route | Purpose |

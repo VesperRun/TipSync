@@ -15,6 +15,10 @@ class GigRepository(
 
     fun observeCastOwedTotal(): Flow<Int> = dao.observeCastOwedTotal()
 
+    fun observeGuaranteesUnreceived(): Flow<List<GigEntity>> = dao.observeGuaranteesUnreceived()
+
+    fun observeCastLinesOwed(): Flow<List<CastLineEntity>> = dao.observeCastLinesOwed()
+
     fun observeCast(gigId: String): Flow<List<CastLineEntity>> = dao.observeCastForGig(gigId)
 
     suspend fun gigById(id: String): GigEntity? = withContext(io) { dao.gigById(id) }

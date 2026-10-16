@@ -15,6 +15,10 @@ data class GigEntity(
     val guaranteeReceived: Boolean,
     val tips: Int,
     val tipMethods: String,
+    val otherIncome: Int = 0,
+    val booker: String = "",
+    val source: String = "",
+    val notes: String = "",
 )
 
 @Entity(

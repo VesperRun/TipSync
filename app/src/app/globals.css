@@ -89,6 +89,14 @@ a {
   border: 1px solid #222;
 }
 
+.card-link {
+  display: block;
+}
+
+.accent-text {
+  color: var(--accent);
+}
+
 .card-row {
   display: flex;
   justify-content: space-between;

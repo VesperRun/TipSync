@@ -34,6 +34,25 @@ interface GigDao {
     @Query("SELECT COALESCE(SUM(amount), 0) FROM cast_lines WHERE paid = 0")
     fun observeCastOwedTotal(): Flow<Int>
 
+    @Query(
+        """
+        SELECT * FROM gigs
+        WHERE guarantee > 0 AND guaranteeReceived = 0
+        ORDER BY callTimeIso DESC
+        """,
+    )
+    fun observeGuaranteesUnreceived(): Flow<List<GigEntity>>
+
+    @Query(
+        """
+        SELECT c.* FROM cast_lines c
+        INNER JOIN gigs g ON g.id = c.gigId
+        WHERE c.paid = 0
+        ORDER BY g.callTimeIso DESC
+        """,
+    )
+    fun observeCastLinesOwed(): Flow<List<CastLineEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGigs(gigs: List<GigEntity>)
 

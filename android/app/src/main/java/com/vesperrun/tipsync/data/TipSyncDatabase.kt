@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [GigEntity::class, CastLineEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false,
 )
 abstract class TipSyncDatabase : RoomDatabase() {
@@ -23,7 +23,10 @@ abstract class TipSyncDatabase : RoomDatabase() {
                     context.applicationContext,
                     TipSyncDatabase::class.java,
                     "tipsync.db",
-                ).build().also { instance = it }
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
+                    .also { instance = it }
             }
     }
 }

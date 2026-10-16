@@ -271,15 +271,17 @@ Each **gig** is the source of truth for one performance night (or engagement).
 
 ---
 
-## Open decisions
+## Locked decisions (Phase 0)
 
-| # | Question | Notes |
-|---|----------|-------|
-| 1 | v1 **head-queen-only** login? | Simplest; subs as names on cast |
-| 2 | Sub-queen read-only portal in v1.1? | “What she owes me” without full app |
-| 3 | Inquiry capture: manual only vs form link / email forward? | Affects scope |
-| 4 | Merch on gig card in v1 or v1.1? | Nice P&L but not wedge |
-| 5 | Product name legal / domain | TipSync availability TBD |
+| # | Decision | v1 |
+|---|----------|-----|
+| 1 | **Head queen only** — no cast login | Cast = names on ledger |
+| 2 | Sub-queen portal | **v1.1+** — read-only “owed / paid” if ever |
+| 3 | Inquiry capture | **Manual in-app only** — no email forward / form link |
+| 4 | Merch on gig card | **Post-MVP** |
+| 5 | Name / domain | **TipSync** working title; legal/domain check before public VP |
+| 6 | Ship client | **Android (Room)** — D2C APK; optional `app/` mock only |
+| 7 | Operator data | **No gig collection** — Stripe only ([docs/DATA-POLICY.md](./docs/DATA-POLICY.md)) |
 
 ---
 

@@ -36,8 +36,18 @@ export default async function GigDetailPage({
         </div>
         <h1>{gig.venue}</h1>
         <p className="muted">{formatShortDate(gig.callTime)}</p>
-        <p className="role">{gig.role}</p>
+        {gig.status === "Completed" || gig.status === "Paid" ? (
+          <p className="role accent-text">Post-show — log income and mark cast paid</p>
+        ) : null}
       </header>
+
+      <section className="card">
+        <h2 className="section-title">Booking</h2>
+        <div className="money-row">
+          <span>Role</span>
+          <span>{gig.role}</span>
+        </div>
+      </section>
 
       <section className="card">
         <h2 className="section-title">Show income</h2>

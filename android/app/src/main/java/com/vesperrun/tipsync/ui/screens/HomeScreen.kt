@@ -1,7 +1,7 @@
 package com.vesperrun.tipsync.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,6 +24,7 @@ import com.vesperrun.tipsync.ui.components.GigCard
 fun HomeScreen(
     repository: GigRepository,
     onGigClick: (String) -> Unit,
+    onUnpaidClick: () -> Unit,
 ) {
     val gigs by repository.observeGigs().collectAsState(initial = emptyList())
     val castOwed by repository.observeCastOwedTotal().collectAsState(initial = 0)
@@ -45,11 +46,14 @@ fun HomeScreen(
         if (castOwed > 0) {
             item {
                 Card(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .clickable(onClick = onUnpaidClick),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
                 ) {
                     Text(
-                        "Cast still owed: $$castOwed",
+                        "$$castOwed cast still owed across shows",
                         modifier = Modifier.padding(16.dp),
                         color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.titleMedium,
