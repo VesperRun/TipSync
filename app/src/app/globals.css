@@ -221,3 +221,82 @@ a {
   padding: 24px 0;
   color: var(--text-muted);
 }
+
+.stack-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.field input,
+.field select {
+  min-height: var(--tap-min);
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  background: #0a0a0a;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.row-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  min-height: var(--tap-min);
+  padding: 0 16px;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.btn-primary.inline {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+}
+
+.btn-ghost {
+  margin-top: 16px;
+  min-height: var(--tap-min);
+  background: transparent;
+  border: 1px solid #444;
+  color: var(--text-muted);
+  border-radius: 10px;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+.link-accent {
+  color: var(--accent);
+}
+
+.error {
+  color: #f87171;
+  margin: 0;
+}
+
+.add-cast {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #222;
+}
+
+code {
+  font-size: 0.85em;
+  color: var(--accent);
+}

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TipSync</string>
+    <string name="tagline">Lip sync sells the show. TipSync saves the business.</string>
+    <string name="not_payment_processor">TipSync does not process payments.</string>
+</resources>

@@ -1,6 +1,6 @@
 # TipSync — Screen spec (v1 MVP)
 
-Mobile-first PWA. Bottom nav on all main screens.
+**Android (Compose)** — ship target. Bottom nav on all main screens. (`app/` = optional static mock only.)
 
 ## Nav
 
